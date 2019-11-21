@@ -6,20 +6,30 @@ public class ManipuladorDeContas {
 
     private Conta conta;
 
-    public void criaConta(Evento evento){
-        this.conta = new Conta();
-        this.conta.setAgencia("1234");
-        this.conta.setNumero(56789);
-        this.conta.setTitular("Batman");
+    public void criaConta(Evento evento) {
+
+        String tipo = evento.getSelecionadoNoRadio("tipo");
+        if(tipo.equals("Conta Corrente"))
+            this.conta = new ContaCorrente();
+        else {
+            this.conta = new ContaPoupanca();
+        }
+        this.conta.setAgencia(evento.getString("agencia"));
+        this.conta.setNumero(evento.getInt("numero"));
+        this.conta.setTitular(evento.getString("titular"));
     }
 
     public void deposita(Evento evento) {
-        double valorDigitado = evento.getDouble("valorDigitado");
-        this.conta.deposita(valorDigitado);
+        double valorDigitado = evento.getDouble("valorOperacao");
+
     }
 
     public void saca(Evento evento) {
-        double valorDigitado = evento.getDouble("valorDigitado");
-        this.conta.saca(valorDigitado);
+        this.conta.saca(evento.getDouble("valorOperacao"));
+    }
+
+    public void transfere(Evento evento) {
+        Conta destino = (Conta) evento.getSelecionadoNoCombo("destino");
+        conta.transfere(evento.getDouble("valorTransferencia"), destino);
     }
 }

@@ -52,7 +52,7 @@ public abstract class Conta {
     }
 
     public abstract String getTipo();
-    
+
     public String recuperaDadosParaImpressao() {
         String dados = "Titular: " + this.titular;
         dados += "\nNúmero: " + this.numero;

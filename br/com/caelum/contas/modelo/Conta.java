@@ -1,4 +1,5 @@
 package br.com.caelum.contas.modelo;
+import br.com.caelum.contas.util.SaldoInsuficienteException;
 
 public abstract class Conta {
     private int numero;
@@ -29,15 +30,20 @@ public abstract class Conta {
     }
 
     public void saca(double valorSaque) {
+        if(valorSaque < 0) {
+            throw new IllegalArgumentException("Valor de saque deve ser positivo.");
+        }
         if(this.saldo < valorSaque) {
-            System.out.printf("Saldo insuficiente para saque.");
+            throw new SaldoInsuficienteException(valorSaque);
         }else {
             this.saldo -= valorSaque;
         }
     }
 
     public void deposita(double valorDeposito) {
-        if(valorDeposito > 0) {
+        if (valorDeposito < 0) {
+            throw new IllegalArgumentException("Valor de deposito deve ser positivo.");
+        } else if (valorDeposito > 0) {
             this.saldo += valorDeposito;
         }
     }

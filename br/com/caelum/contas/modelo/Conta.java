@@ -1,6 +1,6 @@
 package br.com.caelum.contas.modelo;
 
-public class Conta {
+public abstract class Conta {
     private int numero;
     private String titular;
     protected double saldo;
@@ -51,8 +51,13 @@ public class Conta {
         conta.deposita(valorTransferencia);
     }
 
-    public String getTipo() {
-        return "Conta";
+    public abstract String getTipo();
+    
+    public String recuperaDadosParaImpressao() {
+        String dados = "Titular: " + this.titular;
+        dados += "\nNúmero: " + this.numero;
+        dados += "\nAgência: " + this.agencia;
+        dados += "\nSaldo: R$" + this.saldo;
+        return dados;
     }
-
 }
